@@ -1,0 +1,13 @@
+query:
+  accounts: "SELECT AccountNumber FROM Account limit 1"
+  
+update: 
+  accounts: "Account"
+  
+upsert:
+  accounts: 
+    object: "Account"
+    externalId: "Id"
+
+create:
+  contacts: "Contact"

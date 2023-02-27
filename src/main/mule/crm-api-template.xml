@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd 
+http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+    <flow name="crm-api-template-main">
+        <http:listener config-ref="http-listener-config" path="/api/*">
+            <http:response statusCode="#[vars.httpStatus default 200]">
+                <http:headers>#[vars.outboundHeaders default {}]</http:headers>
+            </http:response>
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body>#[payload]</http:body>
+                <http:headers>#[vars.outboundHeaders default {}]</http:headers>
+            </http:error-response>
+        </http:listener>
+        <apikit:router config-ref="crm-api-template-config" />
+		<error-handler ref="global_error_handler" />
+    </flow>
+    <flow name="crm-api-template-console">
+        <http:listener config-ref="http-listener-config" path="/console/*">
+            <http:response statusCode="#[vars.httpStatus default 200]">
+                <http:headers>#[vars.outboundHeaders default {}]</http:headers>
+            </http:response>
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body>#[payload]</http:body>
+                <http:headers>#[vars.outboundHeaders default {}]</http:headers>
+            </http:error-response>
+        </http:listener>
+        <apikit:console config-ref="crm-api-template-config" />
+		<error-handler ref="global_error_handler" />
+    </flow>
+    <flow name="get:\users:crm-api-template-config">
+        <flow-ref doc:name="get:\resource:crm-api-template-impl" doc:id="6b2b2067-2a3b-4049-bc3e-68e1815c0199" name="get:\resource:crm-api-template-impl"/>
+		<logger level="INFO" message="get:\resource:crm-api-template-config" />
+    </flow>
+    <flow name="get:\healthcheck:crm-api-template-config">
+        <logger level="INFO" message="get:\healthCheck:crm-api-template-config" />
+		<salesforce:query doc:name="Query" doc:id="3bfaa968-f5b5-4536-b04c-e5aab317655a" config-ref="Salesforce_Config">
+			<salesforce:salesforce-query><![CDATA[${query.accounts}]]></salesforce:salesforce-query>
+		</salesforce:query>
+		<ee:transform doc:name="Transform Message" doc:id="47bc2305-c8f4-4dbd-9d43-203a1cf68ac3" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"status":"OK",
+	"appName": app.name
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+    </flow>
+</mule>

@@ -1,0 +1,38 @@
+#%RAML 1.0
+title: crm-api-template
+
+protocols:
+  - HTTP
+  - HTTPS
+
+traits: 
+  responseMessages: !include /Traits/errorResponseTraits.raml
+  client-id-required:
+    headers:
+      client_id:
+        type: string
+      client_secret:
+        type: string
+    responses:
+      401:
+        description: Unauthorized or invalid client application credentials
+      500:
+        description: Bad response from authorization server
+
+/healthcheck:
+  is: [client-id-required]
+  get:
+    responses:
+      200:
+       body:
+         application/json:
+           
+/users:
+  get:
+    is: [client-id-required, responseMessages]
+    description: get the list of user details
+    responses:
+      201:
+        body:
+          application/json:
+            example: !include /Examples/usersResponse.json

@@ -1,0 +1,26 @@
+api:
+  id: "123456789"  # Auto-discovery
+
+https:
+  listener:
+    host: "0.0.0.0"
+    timeout:
+      connection-idle: "600000"
+  private:
+    port:"8092"
+  port: "8081"
+  request:
+    timeout:
+      connection-idle: "400000"
+      response: "40000"
+      
+salesforce:
+  username: "sa-mulesoft@podium.com.fullcopy"
+  url: "https://podium--fullcopy.sandbox.my.salesforce.com/services/Soap/u/48.0"
+  reconnection:
+    interval: "5000"
+    count: "2"
+  
+reconnection: 
+  frequency: "3000"
+  retries: "3"
