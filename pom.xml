@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>853f1f66-b2a0-424f-9245-0db39e66f475</groupId>
@@ -47,6 +47,7 @@
 				<extensions>true</extensions>
 				<configuration>
 					<filterAppDirectory>true</filterAppDirectory>
+					<classifier>mule-application</classifier>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -92,7 +93,6 @@
 			<version>10.16.7</version>
 			<classifier>mule-plugin</classifier>
 		</dependency>
-		
 		<dependency>
 			<groupId>org.mule.modules</groupId>
 			<artifactId>mule-validation-module</artifactId>
@@ -138,19 +138,19 @@
 			<version>10.1.1</version>
 			<classifier>mule-plugin</classifier>
 		</dependency>
-    	<dependency>
-            <groupId>org.mule.modules</groupId>
-            <artifactId>mule-apikit-module</artifactId>
-            <version>1.3.12</version>
-            <classifier>mule-plugin</classifier>
-        </dependency>
-    	<dependency>
-            <groupId>com.mulesoft.connectors</groupId>
-            <artifactId>mule-cloudhub-connector</artifactId>
-            <version>1.0.1</version>
-            <classifier>mule-plugin</classifier>
-        </dependency>
-    </dependencies>
+		<dependency>
+			<groupId>org.mule.modules</groupId>
+			<artifactId>mule-apikit-module</artifactId>
+			<version>1.3.12</version>
+			<classifier>mule-plugin</classifier>
+		</dependency>
+		<dependency>
+			<groupId>com.mulesoft.connectors</groupId>
+			<artifactId>mule-cloudhub-connector</artifactId>
+			<version>1.0.1</version>
+			<classifier>mule-plugin</classifier>
+		</dependency>
+	</dependencies>
 
 	<distributionManagement>
 		<repository>
